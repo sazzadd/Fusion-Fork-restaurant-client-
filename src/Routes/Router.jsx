@@ -6,17 +6,17 @@ import Menu from "../pages/Menu/Menu";
 const router = createBrowserRouter([
   {
     path: "/",
-    element:<MainLayouts></MainLayouts>,
-    children:[
-    {  
-      path:'/',
-      element:<Home></Home>
-    },
-    {  
-      path:'/',
-      element:<Menu></Menu>
-    }
-    ]
+    element: <MainLayouts></MainLayouts>,
+    children: [
+      {
+        path: "/",
+        element: <Home></Home>,
+      },
+      {
+        path: "menu",
+        element: <Menu></Menu>,
+      },
+    ],
   },
 ]);
 
