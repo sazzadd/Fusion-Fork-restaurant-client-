@@ -2,7 +2,7 @@ import React from "react";
 
 const Cover = ({ img, title, subTitle }) => {
   return (
-    <div>
+    <div className="mb-7">
       <div
         className="hero h-[560px]"
         style={{

@@ -1,8 +1,16 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import SecTitile from "../../components/SecTitile";
+import useMenu from "../../hooks/useMenu";
 import Cover from "../../shared/Cover";
-import PopularMenu from "../PopularMenu";
+import MenuCategory from "./MenuCategory";
 const Menu = () => {
+  const [menu] = useMenu();
+  const dessert = menu.filter((item) => item.category == "dessert");
+  const pizza = menu.filter((item) => item.category == "pizza");
+  const soup = menu.filter((item) => item.category == "soup");
+  const salad = menu.filter((item) => item.category == "salad");
+  const offered = menu.filter((item) => item.category == "offered");
   return (
     <div>
       <Helmet>
@@ -14,17 +22,33 @@ const Menu = () => {
         subTitle="Would you like to try a dish?"
         img={"https://i.ibb.co.com/5hFyPW4/herro-slide-1.jpg"}
       ></Cover>
+      <SecTitile heading="todays Offer" subHeading="Don't miss "></SecTitile>
       <div className="py-5">
-        <PopularMenu></PopularMenu>
+        <MenuCategory items={offered}></MenuCategory>
       </div>
-      <Cover
-        title="DESSERTS"
-        subTitle="Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-        img={"https://i.ibb.co.com/Fz7mBx1/header-how-to-design-a-balanced-dessert-menu.jpg"}
-      ></Cover>
-      <div className="py-5">
-        <PopularMenu></PopularMenu>
-      </div>
+      <MenuCategory
+        items={dessert}
+        title="Dessert"
+        img={
+          "https://i.ibb.co.com/Fz7mBx1/header-how-to-design-a-balanced-dessert-menu.jpg"
+        }
+      ></MenuCategory>
+      <MenuCategory
+        items={pizza}
+        title="pizza"
+        subTitle="Order Now and Experience Pizza Like Never Before!"
+        img={
+          "https://i.ibb.co.com/3mQw8Wk/homemade-pizza-monterey-jack-cheese.jpg"
+        }
+      ></MenuCategory>
+      <MenuCategory
+        items={salad}
+        title="salad"
+        subTitle="Order Now and Experience Pizza Like Never Before!"
+        img={
+          "https://i.ibb.co.com/3mQw8Wk/homemade-pizza-monterey-jack-cheese.jpg"
+        }
+      ></MenuCategory>
     </div>
   );
 };
