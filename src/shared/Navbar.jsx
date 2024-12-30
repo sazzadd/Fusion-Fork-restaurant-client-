@@ -1,8 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const navList = (
     <>
+      <li className="hover:text-yellow-400">
+       <Link to="/menu">Our Menu</Link>
+      </li>
       <li className="hover:text-yellow-400">
         <a>Item 1</a>
       </li>
