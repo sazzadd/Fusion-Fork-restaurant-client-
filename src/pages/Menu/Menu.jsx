@@ -29,6 +29,7 @@ const Menu = () => {
       <MenuCategory
         items={dessert}
         title="Dessert"
+        subTitle="Craving Something Sweet? Explore Our Dessert Menu!"
         img={
           "https://i.ibb.co.com/Fz7mBx1/header-how-to-design-a-balanced-dessert-menu.jpg"
         }
@@ -44,10 +45,14 @@ const Menu = () => {
       <MenuCategory
         items={salad}
         title="salad"
-        subTitle="Order Now and Experience Pizza Like Never Before!"
-        img={
-          "https://i.ibb.co.com/3mQw8Wk/homemade-pizza-monterey-jack-cheese.jpg"
-        }
+        subTitle="Fresh, Crisp, and Packed with Flavor - The Perfect Salad Awaits!"
+        img={"https://i.ibb.co.com/jhyFt4H/salad-bg.jpg"}
+      ></MenuCategory>
+      <MenuCategory
+        items={soup}
+        title="soup"
+        subTitle="Warm, Wholesome, and Delicious  Soup Made with Love."
+        img={"https://i.ibb.co.com/CKQPKFH/soup-bg.jpg"}
       ></MenuCategory>
     </div>
   );
