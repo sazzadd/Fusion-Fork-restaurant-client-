@@ -25,7 +25,7 @@ const PopularMenu = () => {
         ></SecTitile>
       </section>
       <div className="grid md:grid-cols-2 gap space-x-5">
-        {menu.map((item) => (
+        {popular.map((item) => (
           <MenuItem item={item}></MenuItem>
         ))}
       </div>

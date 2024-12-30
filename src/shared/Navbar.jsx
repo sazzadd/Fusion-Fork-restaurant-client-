@@ -5,7 +5,7 @@ const Navbar = () => {
   const navList = (
     <>
       <li className="hover:text-yellow-400">
-       <Link to="/menu">Our Menu</Link>
+        <Link to="/menu">Our Menu</Link>
       </li>
       <li className="hover:text-yellow-400">
         <a>Item 1</a>
@@ -40,7 +40,9 @@ const Navbar = () => {
               {navList}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">Fusion Fork</a>
+          <Link to="/" className="btn btn-ghost text-xl">
+            Fusion Fork
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navList}</ul>
