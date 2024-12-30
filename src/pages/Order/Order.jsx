@@ -27,7 +27,11 @@ const Order = () => {
             <Tab>Dessert</Tab>
             <Tab>Drinks</Tab>
           </TabList>
-          <TabPanel></TabPanel>
+          <TabPanel>
+            {
+                salad.map(item )
+            }
+          </TabPanel>
           <TabPanel></TabPanel>
           <TabPanel></TabPanel>
           <TabPanel></TabPanel>
