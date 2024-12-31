@@ -13,6 +13,9 @@ const Navbar = () => {
       <li className="hover:text-yellow-400">
         <Link to="/order">Order food</Link>
       </li>
+      <li className="hover:text-yellow-400">
+        <Link to="/login">Login</Link>
+      </li>
     </>
   );
   return (
