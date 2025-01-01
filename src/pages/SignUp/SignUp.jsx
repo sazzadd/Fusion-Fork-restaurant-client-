@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import {
@@ -9,8 +9,10 @@ import {
   FaGoogle,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../provider/AuthProvider";
 
 const SignUp = () => {
+  const { createNewUser,setUser } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -21,6 +23,11 @@ const SignUp = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+    createNewUser(data.email, data.password)
+    .then((result) => {
+        const user = result.user;
+        setUser(user);})
+
   };
 
   const togglePasswordVisibility = () => {
@@ -34,9 +41,9 @@ const SignUp = () => {
         backgroundImage: "url(https://i.ibb.co/r3dNFw4/authentication.png)",
       }}
     >
-        <Helmet>
-                <title>Fusion Fork |Sign Up</title>
-              </Helmet>
+      <Helmet>
+        <title>Fusion Fork |Sign Up</title>
+      </Helmet>
       <div
         className="bg-white shadow-lg rounded-lg max-w-4xl w-full p-6 md:p-8 flex flex-col md:flex-row"
         style={{

@@ -12,6 +12,7 @@ const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  console.log(user)
   const [loading, setLoading] = useState(true);
   const createNewUser = (email, password) => {
     setLoading(true);
@@ -42,6 +43,7 @@ const AuthProvider = ({ children }) => {
     createNewUser,
     userLogin,
     logOut,
+    setUser,
   };
 
   return (
