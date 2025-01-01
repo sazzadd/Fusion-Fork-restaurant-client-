@@ -8,6 +8,7 @@ import {
 } from "react-simple-captcha";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../provider/AuthProvider";
+import { Helmet } from "react-helmet-async";
 
 const LoginPage = () => {
   const captchaRef = useRef(null);
@@ -65,6 +66,9 @@ const LoginPage = () => {
         backgroundImage: "url('https://i.ibb.co/r3dNFw4/authentication.png')",
       }}
     >
+      <Helmet>
+                      <title>Fusion Fork |Login</title>
+                    </Helmet>
       <div className="flex bg-white shadow-lg rounded-lg overflow-hidden max-w-4xl w-full">
         {/* Left Side */}
         <div className="hidden md:block w-1/2 h-auto">
