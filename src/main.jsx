@@ -8,9 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 import AuthProvider from "./provider/AuthProvider";
 import router from "./Routes/Router";
-
 createRoot(document.getElementById("root")).render(
   <AuthProvider>
+    <ToastContainer></ToastContainer>
     <HelmetProvider>
       <React.StrictMode>
         <ToastContainer></ToastContainer>

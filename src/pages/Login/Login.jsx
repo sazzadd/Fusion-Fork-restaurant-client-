@@ -5,31 +5,51 @@ import {
   loadCaptchaEnginge,
   validateCaptcha,
 } from "react-simple-captcha";
-
+import { toast } from "react-toastify";
+import { AuthContext } from "../../provider/AuthProvider";
 const LoginPage = () => {
   const captchaRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
-  const [captchaValidated, setCaptchaValidated] = useState(false); 
+
+  const [captchaValidated, setCaptchaValidated] = useState(false);
+  const [error, setError] = useState({});
+  const { userLogin } = useContext(AuthContext);
 
   useEffect(() => {
-    if (!captchaValidated) { 
+    if (!captchaValidated) {
       loadCaptchaEnginge(6);
     }
   }, [captchaValidated]);
-
+  const notify = () => toast("Wow so easy!");
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
     console.log(email, password);
+
+    //
+    userLogin(email, password)
+      .then((result) => {
+        const user = result.user;
+        if (user) {
+          toast.success("Login successful!");
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        setError({ ...error, login: err.code });
+        toast.error(err.message);
+      });
   };
 
   const handleValidateCaptcha = () => {
     const user_captcha_value = captchaRef.current.value;
     if (validateCaptcha(user_captcha_value)) {
       setDisabled(false);
-      setCaptchaValidated(true); 
+      setCaptchaValidated(true);
     } else {
       setDisabled(true);
     }
@@ -101,7 +121,11 @@ const LoginPage = () => {
             </div>
             <input
               disabled={disabled}
-              className={`w-full py-2 rounded-lg text-white transition-opacity duration-300 ${disabled ? "bg-gray-300 cursor-not-allowed opacity-70" : "bg-gradient-to-r from-orange-400 to-yellow-500 hover:opacity-90 cursor-pointer"}`}
+              className={`w-full py-2 rounded-lg text-white transition-opacity duration-300 ${
+                disabled
+                  ? "bg-gray-300 cursor-not-allowed opacity-70"
+                  : "bg-gradient-to-r from-orange-400 to-yellow-500 hover:opacity-90 cursor-pointer"
+              }`}
               type="submit"
               value="Login"
             />
@@ -117,6 +141,7 @@ const LoginPage = () => {
           <div className="mt-6 flex justify-center items-center">
             <p className="text-gray-600 mr-4">Or sign in with</p>
             <div className="flex space-x-4">
+              <button onClick={notify}>Notify!</button>
               <button className="flex justify-center items-center text-blue-600 bg-white rounded-full border border-blue-500 p-3 hover:scale-110 transition-transform duration-200 focus:outline-none">
                 <FaFacebook size={24} />
               </button>
