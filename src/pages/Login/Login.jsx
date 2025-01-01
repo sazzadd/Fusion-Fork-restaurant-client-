@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
+import { FaFacebook, FaGithub, FaGoogle, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import {
   LoadCanvasTemplate,
@@ -8,13 +8,16 @@ import {
 } from "react-simple-captcha";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../provider/AuthProvider";
+
 const LoginPage = () => {
   const captchaRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
-
   const [captchaValidated, setCaptchaValidated] = useState(false);
   const [error, setError] = useState({});
   const { userLogin } = useContext(AuthContext);
+
+  // State for toggling password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (!captchaValidated) {
@@ -29,7 +32,6 @@ const LoginPage = () => {
     const password = form.password.value;
     console.log(email, password);
 
-    //
     userLogin(email, password)
       .then((result) => {
         const user = result.user;
@@ -92,19 +94,26 @@ const LoginPage = () => {
               <label className="block text-gray-700 text-sm font-bold mb-2">
                 Password
               </label>
-              <input
-                name="password"
-                type="password"
-                placeholder="Enter your password"
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
+              <div className="relative">
+                <input
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+                <span
+                  className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
                 Captcha
               </label>
               <LoadCanvasTemplate />
-
               <input
                 type="text"
                 name="captcha"
@@ -115,7 +124,7 @@ const LoginPage = () => {
               <button
                 onClick={handleValidateCaptcha}
                 className="btn mt-5 btn-outline btn-xs px-3 py-1 text-xs font-medium rounded-full border-2 border-green-500 text-green-500 
-    hover:bg-green-500 hover:text-white shadow-md hover:shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-110"
+                  hover:bg-green-500 hover:text-white shadow-md hover:shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-110"
               >
                 Validate
               </button>
@@ -138,9 +147,6 @@ const LoginPage = () => {
                 {" "}
                 Create a New Account{" "}
               </Link>
-              {/* <a href="#" >
-               
-              </a> */}
             </p>
           </div>
           <div className="mt-6 flex justify-center items-center">
