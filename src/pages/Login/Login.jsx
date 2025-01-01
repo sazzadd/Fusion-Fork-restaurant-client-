@@ -20,7 +20,7 @@ const LoginPage = () => {
       loadCaptchaEnginge(6);
     }
   }, [captchaValidated]);
-  const notify = () => toast("Wow so easy!");
+
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -141,7 +141,6 @@ const LoginPage = () => {
           <div className="mt-6 flex justify-center items-center">
             <p className="text-gray-600 mr-4">Or sign in with</p>
             <div className="flex space-x-4">
-              <button onClick={notify}>Notify!</button>
               <button className="flex justify-center items-center text-blue-600 bg-white rounded-full border border-blue-500 p-3 hover:scale-110 transition-transform duration-200 focus:outline-none">
                 <FaFacebook size={24} />
               </button>
