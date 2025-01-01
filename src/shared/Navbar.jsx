@@ -98,7 +98,7 @@ const Navbar = () => {
           ) : (
             <div className="space-x-3 flex">
               <Link
-                to="/auth/login"
+                to="/login"
                 className="py-2 px-4 text-sm font-medium text-gray-800 bg-yellow-400 rounded-lg shadow-md border border-yellow-500 hover:bg-yellow-500 hover:text-white transition-all duration-200"
               >
                 Login

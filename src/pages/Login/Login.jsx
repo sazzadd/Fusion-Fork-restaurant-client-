@@ -9,23 +9,28 @@ import {
 import { toast } from "react-toastify";
 import { AuthContext } from "../../provider/AuthProvider";
 import { Helmet } from "react-helmet-async";
-
+import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
   
   const captchaRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
   const [captchaValidated, setCaptchaValidated] = useState(false);
   const [error, setError] = useState({});
-  const { userLogin } = useContext(AuthContext);
+  const { userLogin ,user, setUser} = useContext(AuthContext);
+  const navigate = useNavigate();
+
 
   // State for toggling password visibility
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
-    if (!captchaValidated) {
+    try {
       loadCaptchaEnginge(6);
+    } catch (err) {
+      console.error("Captcha Engine Error:", err);
     }
-  }, [captchaValidated]);
+  }, []);
+  
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -52,11 +57,14 @@ const LoginPage = () => {
 
   const handleValidateCaptcha = () => {
     const user_captcha_value = captchaRef.current.value;
+    console.log("User Captcha:", user_captcha_value);
     if (validateCaptcha(user_captcha_value)) {
       setDisabled(false);
       setCaptchaValidated(true);
+      toast.success("Captcha validated!");
     } else {
       setDisabled(true);
+      toast.error("Captcha validation failed.");
     }
   };
 
@@ -126,7 +134,8 @@ const LoginPage = () => {
                 placeholder="Type here"
                 className="w-full mt-2 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
-              <button
+              <button 
+                type="button"
                 onClick={handleValidateCaptcha}
                 className="btn mt-5 btn-outline btn-xs px-3 py-1 text-xs font-medium rounded-full border-2 border-green-500 text-green-500 
                   hover:bg-green-500 hover:text-white shadow-md hover:shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-110"
