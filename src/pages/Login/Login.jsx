@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import {
   LoadCanvasTemplate,
   loadCaptchaEnginge,
@@ -133,9 +134,13 @@ const LoginPage = () => {
           <div className="text-center mt-4">
             <p>
               New here?{" "}
-              <a href="#" className="text-blue-500 hover:underline">
-                Create a New Account
-              </a>
+              <Link className="text-blue-500 hover:underline" to="/signup">
+                {" "}
+                Create a New Account{" "}
+              </Link>
+              {/* <a href="#" >
+               
+              </a> */}
             </p>
           </div>
           <div className="mt-6 flex justify-center items-center">
