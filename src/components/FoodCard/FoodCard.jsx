@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../provider/AuthProvider";
 
@@ -7,9 +7,18 @@ const FoodCard = ({ item }) => {
   const { name, image, price, recipe } = item;
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
   const handleAddToCart = (food) => {
     if (user && user.email) {
       // send item to database
+      console.log(user.email, food);
+      const cartItem = {
+        menuId: _id,
+        email: user.email,
+        name,
+        image,
+        price,
+      };
     } else {
       Swal.fire({
         title: "You are not loged in ",
@@ -27,7 +36,7 @@ const FoodCard = ({ item }) => {
           //   icon: "success",
           // });
           // send the user to the login page
-          navigate("/login");
+          navigate("/login", { state: { form: location } });
         }
       });
     }

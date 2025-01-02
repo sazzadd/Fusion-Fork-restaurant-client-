@@ -1,6 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { FaFacebook, FaGithub, FaGoogle, FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import {
+  FaEye,
+  FaEyeSlash,
+  FaFacebook,
+  FaGithub,
+  FaGoogle,
+} from "react-icons/fa";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   LoadCanvasTemplate,
   loadCaptchaEnginge,
@@ -8,17 +15,16 @@ import {
 } from "react-simple-captcha";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../provider/AuthProvider";
-import { Helmet } from "react-helmet-async";
-import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
-  
   const captchaRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
   const [captchaValidated, setCaptchaValidated] = useState(false);
   const [error, setError] = useState({});
-  const { userLogin ,user, setUser} = useContext(AuthContext);
+  const { userLogin, user, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
-
+  const location = useLocation();
+  // const form = location.state?.form?.pathname || "/";
+  console.log("state in the location", location.state);
 
   // State for toggling password visibility
   const [showPassword, setShowPassword] = useState(false);
@@ -30,7 +36,6 @@ const LoginPage = () => {
       console.error("Captcha Engine Error:", err);
     }
   }, []);
-  
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -45,7 +50,14 @@ const LoginPage = () => {
         if (user) {
           toast.success("Login successful!");
           setTimeout(() => {
-            navigate("/");
+            // if(form){
+            // navigate( form) 
+            // }
+            // else{
+            //   navigate("/")
+            // }
+            navigate(location?.state ? location.state : "/")
+           ;
           }, 2000);
         }
       })
@@ -76,8 +88,8 @@ const LoginPage = () => {
       }}
     >
       <Helmet>
-                      <title>Fusion Fork |Login</title>
-                    </Helmet>
+        <title>Fusion Fork |Login</title>
+      </Helmet>
       <div className="flex bg-white shadow-lg rounded-lg overflow-hidden max-w-4xl w-full">
         {/* Left Side */}
         <div className="hidden md:block w-1/2 h-auto">
@@ -134,7 +146,7 @@ const LoginPage = () => {
                 placeholder="Type here"
                 className="w-full mt-2 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
-              <button 
+              <button
                 type="button"
                 onClick={handleValidateCaptcha}
                 className="btn mt-5 btn-outline btn-xs px-3 py-1 text-xs font-medium rounded-full border-2 border-green-500 text-green-500 
