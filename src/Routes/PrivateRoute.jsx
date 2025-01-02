@@ -4,12 +4,11 @@ import { Navigate, useLocation } from "react-router-dom";
 import Loading from "../components/Loading";
 import { AuthContext } from "../provider/AuthProvider";
 
-
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
 
   const location = useLocation();
- 
+
   if (loading) {
     return <Loading></Loading>;
   }
@@ -18,7 +17,7 @@ const PrivateRoute = ({ children }) => {
   }
 
   // Redirect to login page if not authenticated
-  return <Navigate state={location.pathname} to="/auth/login" />;
+  return <Navigate state={location.pathname} to="/login" />;
 };
 
 export default PrivateRoute;
