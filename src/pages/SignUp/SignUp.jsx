@@ -8,12 +8,14 @@ import {
   FaGithub,
   FaGoogle,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { AuthContext } from "../../provider/AuthProvider";
 
 const SignUp = () => {
-  const { createNewUser,setUser } = useContext(AuthContext);
+  const { createNewUser, setUser, updateUserProfile } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -23,11 +25,23 @@ const SignUp = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    createNewUser(data.email, data.password)
-    .then((result) => {
-        const user = result.user;
-        setUser(user);})
 
+    createNewUser(data.email, data.password).then((result) => {
+      const user = result.user;
+      setUser(user);
+      updateUserProfile({ displayName: data.name, photoURL: data.photoURL })
+        .then(() => {
+          console.log("user profile info ");
+          toast.success("register successfully");
+          setTimeout(() => {
+            navigate("/"); // Redirect to the login page
+          }, 2000);
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          toast.error(errorMessage || "An error occurred during registration.");
+        });
+    });
   };
 
   const togglePasswordVisibility = () => {
