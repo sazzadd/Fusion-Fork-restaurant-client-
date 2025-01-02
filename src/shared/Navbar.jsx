@@ -61,6 +61,7 @@ const Navbar = () => {
           {/* <a className="btn">Button</a> */}
           <div className="relative mr-3">
             <div className="relative">
+              <Link to="/dashboard/cart">
               <button className="btn rounded-full bg-green-700 text-white p-3">
                 <BsCart4 className="text-white text-2xl" />{" "}
                 {/* Increase icon size here */}
@@ -68,6 +69,8 @@ const Navbar = () => {
                   {cart.length}
                 </div>
               </button>
+              </Link>
+             
             </div>
           </div>
 
