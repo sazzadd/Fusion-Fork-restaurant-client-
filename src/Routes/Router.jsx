@@ -6,6 +6,7 @@ import Menu from "../pages/Menu/Menu";
 import Order from "../pages/Order/Order";
 import SignUp from "../pages/SignUp/SignUp";
 import Dashboard from "../layouts/Dashboard";
+import Cart from "../pages/Dashboard/Cart/cart";
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,8 @@ const router = createBrowserRouter([
     element:<Dashboard></Dashboard>,
     children:[
       {
-        path:'cart'
+        path:'cart',
+        element:<Cart></Cart>
       }
     ]
   }
