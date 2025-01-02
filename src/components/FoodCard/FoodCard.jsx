@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../provider/AuthProvider";
 
 const FoodCard = ({ item }) => {
   const { name, image, price, recipe } = item;
-  const handleAddToCart  = food => {
-    console.log(food)
-  }
+  const { user } = useContext(AuthContext);
+  const handleAddToCart = (food) => {
+   if(user && user.email){
+    // send item to database
+
+   }
+   else{
+    
+   }
+  };
   return (
     <div className="max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
       <div className="relative">
@@ -25,10 +33,10 @@ const FoodCard = ({ item }) => {
         </h2>
         <p className="text-sm text-gray-600 text-center mb-4">{recipe}</p>
         <div className="flex justify-center">
-          <button 
-          
-          onClick={()=> handleAddToCart(item)}
-          className="btn btn-outline border-0 border-b-4 border-[#BB8506] mb-8 mt-4 text-black hover:text-white hover:bg-black hover:border-black transform hover:scale-105 transition-all duration-300 ease-in-out">
+          <button
+            onClick={() => handleAddToCart(item)}
+            className="btn btn-outline border-0 border-b-4 border-[#BB8506] mb-8 mt-4 text-black hover:text-white hover:bg-black hover:border-black transform hover:scale-105 transition-all duration-300 ease-in-out"
+          >
             Order Now
           </button>
         </div>
