@@ -8,6 +8,16 @@ import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 import AuthProvider from "./provider/AuthProvider";
 import router from "./Routes/Router";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query'
+const queryClient = new QueryClient()
+
+
+
+
 createRoot(document.getElementById("root")).render(
   <AuthProvider>
     <ToastContainer></ToastContainer>
