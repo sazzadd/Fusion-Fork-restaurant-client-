@@ -1,17 +1,36 @@
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { AuthContext } from "../../provider/AuthProvider";
 
 const FoodCard = ({ item }) => {
   const { name, image, price, recipe } = item;
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleAddToCart = (food) => {
-   if(user && user.email){
-    // send item to database
-
-   }
-   else{
-    
-   }
+    if (user && user.email) {
+      // send item to database
+    } else {
+      Swal.fire({
+        title: "You are not loged in ",
+        text: "Please login to add to the Cart",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Login!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Swal.fire({
+          //   title: "Deleted!",
+          //   text: "Your file has been deleted.",
+          //   icon: "success",
+          // });
+          // send the user to the login page
+          navigate("/login");
+        }
+      });
+    }
   };
   return (
     <div className="max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
