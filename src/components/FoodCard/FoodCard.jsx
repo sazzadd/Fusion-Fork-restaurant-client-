@@ -3,12 +3,14 @@ import React, { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../provider/AuthProvider";
+import useCart from "../../hooks/useCart";
 
 const FoodCard = ({ item }) => {
   const { name, image, price, recipe ,_id} = item;
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const [, refetch] = useCart()
   const handleAddToCart = (food) => {
     if (user && user.email) {
       // send item to database
@@ -30,6 +32,8 @@ const FoodCard = ({ item }) => {
             showConfirmButton: false,
             timer: 1500
           });
+          // refetch the cart
+          refetch()
         }
       });
     } else {
