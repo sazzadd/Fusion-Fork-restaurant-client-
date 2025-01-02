@@ -23,7 +23,7 @@ const LoginPage = () => {
   const { userLogin, user, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  // const form = location.state?.form?.pathname || "/";
+  const pathaname = location.state?.form?.pathname || "/";
   console.log("state in the location", location.state);
 
   // State for toggling password visibility
@@ -56,7 +56,7 @@ const LoginPage = () => {
             // else{
             //   navigate("/")
             // }
-            navigate(location?.state ? location.state : "/")
+            navigate(pathaname)
            ;
           }, 2000);
         }

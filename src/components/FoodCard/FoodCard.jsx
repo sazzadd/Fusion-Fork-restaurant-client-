@@ -1,10 +1,11 @@
+import axios from "axios";
 import React, { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../provider/AuthProvider";
 
 const FoodCard = ({ item }) => {
-  const { name, image, price, recipe } = item;
+  const { name, image, price, recipe ,_id} = item;
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,6 +20,18 @@ const FoodCard = ({ item }) => {
         image,
         price,
       };
+      axios.post("http://localhost:5000/carts", cartItem).then((res) => {
+        console.log(res.data);
+        if(res.data.insertedId){
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `${name} added your cart`,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      });
     } else {
       Swal.fire({
         title: "You are not loged in ",
