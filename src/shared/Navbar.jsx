@@ -2,8 +2,10 @@ import React, { useContext } from "react";
 import { BsCart4 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
+import useCart from "../hooks/useCart";
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [cart] = useCart()
   const navList = (
     <>
       <li className="hover:text-yellow-400">
@@ -63,7 +65,7 @@ const Navbar = () => {
                 <BsCart4 className="text-white text-2xl" />{" "}
                 {/* Increase icon size here */}
                 <div className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  +99
+                  {cart.length}
                 </div>
               </button>
             </div>
