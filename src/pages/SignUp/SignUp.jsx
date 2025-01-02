@@ -34,8 +34,8 @@ const SignUp = () => {
           console.log("user profile info ");
           toast.success("register successfully");
           setTimeout(() => {
-            navigate("/"); // Redirect to the login page
-          }, 2000);
+            navigate("/"); 
+          }, 1000);
         })
         .catch((error) => {
           const errorMessage = error.message;

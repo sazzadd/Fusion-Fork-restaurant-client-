@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
+import { BsCart4 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
-
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const navList = (
@@ -57,6 +57,18 @@ const Navbar = () => {
         </div>
         <div className="navbar-end">
           {/* <a className="btn">Button</a> */}
+          <div className="relative mr-3">
+            <div className="relative">
+              <button className="btn rounded-full bg-green-700 text-white p-3">
+                <BsCart4 className="text-white text-2xl" />{" "}
+                {/* Increase icon size here */}
+                <div className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  +99
+                </div>
+              </button>
+            </div>
+          </div>
+
           {user ? (
             <div className="dropdown dropdown-end">
               <div
@@ -64,7 +76,7 @@ const Navbar = () => {
                 role="button"
                 className="btn btn-ghost btn-circle avatar hover:scale-110 transition-all duration-300"
               >
-                <div className="w-10 rounded-full border-2 border-yellow-400">
+                <div className="w-13 rounded-full border-2 border-yellow-400">
                   {user.photoURL ? (
                     <img src={user.photoURL} alt="Profile" />
                   ) : (
