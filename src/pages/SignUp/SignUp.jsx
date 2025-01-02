@@ -73,6 +73,23 @@ const SignUp = () => {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
+                Photo URL
+              </label>
+              <input
+                {...register("photoURL", { required: true })}
+                type="text"
+                name="photoURL"
+                placeholder="Type here"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-amber-300"
+              />
+              {errors.photoURL && (
+                <span className="text-sm text-red-500">
+                  photo URL field is required
+                </span>
+              )}
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Email
               </label>
               <input

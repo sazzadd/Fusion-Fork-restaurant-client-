@@ -18,14 +18,22 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
+  // login
   const userLogin = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
+  // update
+  const updateUserProfile = (updateData) => {
+    setLoading(true);
+    return updateProfile(auth.currentUser, updateData);
+  };
+  // logout
   const logOut = () => {
     setLoading(true);
     return signOut(auth);
   };
+  // watch mountain
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
