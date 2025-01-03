@@ -1,11 +1,42 @@
 import React from "react";
-import useCart from "../../../hooks/useCart";
 import { FaTrashAlt } from "react-icons/fa";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useCart from "../../../hooks/useCart";
+import Swal from "sweetalert2";
 
 const Cart = () => {
-  const [cart] = useCart();
+  const [cart, refetch] = useCart();
+  const axiosSecure = useAxiosSecure();
   const totalPrice = cart.reduce((total, item) => total + item.price, 0);
-
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Swal.fire({
+        //   title: "Deleted!",
+        //   text: "Your file has been deleted.",
+        //   icon: "success"
+        // });
+        axiosSecure.delete(`/carts/${id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            refetch()
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          }
+        });
+      }
+    });
+  };
   return (
     <div className="p-6">
       {/* Top Section */}
@@ -62,7 +93,7 @@ const Cart = () => {
                   <td>
                     <button
                       className="btn btn-ghost text-red-500 hover:text-red-700"
-                      onClick={() => console.log("Delete item", item.id)}
+                      onClick={() => handleDelete(item._id)}
                     >
                       <FaTrashAlt className="text-lg" />
                     </button>
