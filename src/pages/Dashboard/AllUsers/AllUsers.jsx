@@ -12,9 +12,7 @@ const AllUsers = () => {
       return res.data;
     },
   });
-  const handleDeleteUser = ()=> {
-
-  }
+  const handleDeleteUser = () => {};
   return (
     <div>
       <h1>all users {users.length}</h1>
@@ -39,13 +37,12 @@ const AllUsers = () => {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>
-                <button
-                    className="text-red-500 bg-orange-300 p-1 rounded hover:text-red-700 transition-transform transform hover:scale-110"
+                  <button
+                    className="text-white bg-orange-300 p-1 rounded hover:text-green-300 transition-transform transform hover:scale-110"
                     onClick={() => handleDeleteUser(user)}
                   >
                     <FaUser className="text-2xl" />
                   </button>
-
                 </td>
                 <td>
                   <button
