@@ -33,7 +33,21 @@ const AllUsers = () => {
       }
     });
   };
-  const handleMakeAdmin = () => {};
+  const handleMakeAdmin = (user) => {
+    axiosSecure.patch(`/users/admin/${user._id}`)
+    .then(res =>{
+      console.log(res.data)
+      if(res.data.modifiedCount>0){
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `${user.name} Admin now !`,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    })
+  };
   return (
     <div>
       <h1>all users {users.length}</h1>
