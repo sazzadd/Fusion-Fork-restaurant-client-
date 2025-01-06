@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { AuthContext } from "../../provider/AuthProvider";
 
 const SignUp = () => {
@@ -22,7 +23,7 @@ const SignUp = () => {
     watch,
     formState: { errors },
   } = useForm();
-
+  const axiosPublic = useAxiosPublic();
   const onSubmit = (data) => {
     console.log(data);
 
@@ -32,10 +33,29 @@ const SignUp = () => {
       updateUserProfile({ displayName: data.name, photoURL: data.photoURL })
         .then(() => {
           console.log("user profile info ");
-          toast.success("register successfully");
-          setTimeout(() => {
-            navigate("/"); 
-          }, 1000);
+          // create user entrty in databaser
+          const userInfo = {
+            name: data.name,
+            email: data.email,
+            userImg: data.photoURL,
+          };
+          axiosPublic
+            .post("/users", userInfo)
+            .then((res) => {
+              if (res.data.insertedId) {
+                console.log("User added to database");
+                // reset();
+                toast.success("Registered successfully");
+                navigate("/");
+              } else {
+                console.error("User not added, response:", res.data);
+                toast.error("Failed to add user.");
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              toast.error("Failed to add user to the database.");
+            });
         })
         .catch((error) => {
           const errorMessage = error.message;

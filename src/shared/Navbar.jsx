@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { BsCart4 } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../provider/AuthProvider";
 import useCart from "../hooks/useCart";
+import { AuthContext } from "../provider/AuthProvider";
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
-  const [cart] = useCart()
+  const [cart] = useCart();
   const navList = (
     <>
       <li className="hover:text-yellow-400">
@@ -62,15 +62,14 @@ const Navbar = () => {
           <div className="relative mr-3">
             <div className="relative">
               <Link to="/dashboard/cart">
-              <button className="btn rounded-full bg-green-700 text-white p-3">
-                <BsCart4 className="text-white text-2xl" />{" "}
-                {/* Increase icon size here */}
-                <div className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  {cart.length}
-                </div>
-              </button>
+                <button className="btn rounded-full bg-green-700 text-white p-3">
+                  <BsCart4 className="text-white text-2xl" />{" "}
+                  {/* Increase icon size here */}
+                  <div className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    {cart.length}
+                  </div>
+                </button>
               </Link>
-             
             </div>
           </div>
 
@@ -121,7 +120,7 @@ const Navbar = () => {
                 Login
               </Link>
               <Link
-                to="/auth/register"
+                to="/signup"
                 className="py-2 px-4 text-sm font-medium text-white bg-gray-800 rounded-lg shadow-md border border-gray-700 hover:bg-gray-700 hover:border-gray-600 transition-all duration-200"
               >
                 Register
