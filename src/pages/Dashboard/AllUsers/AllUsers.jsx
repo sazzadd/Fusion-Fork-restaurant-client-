@@ -1,18 +1,39 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { FaTrashAlt, FaUser } from "react-icons/fa";
+import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: users = [] } = useQuery({
+  const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
       return res.data;
     },
   });
-  const handleDeleteUser = () => {};
+  const handleDeleteUser = (user) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#D1A054",
+      cancelButtonColor: "#FF6B35",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/users/${user._id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            refetch();
+            Swal.fire("Deleted!", "The item has been removed.", "success");
+          }
+        });
+      }
+    });
+  };
+  const handleMakeAdmin = () => {};
   return (
     <div>
       <h1>all users {users.length}</h1>
@@ -39,7 +60,7 @@ const AllUsers = () => {
                 <td>
                   <button
                     className="text-white bg-orange-300 p-1 rounded hover:text-green-300 transition-transform transform hover:scale-110"
-                    onClick={() => handleDeleteUser(user)}
+                    onClick={() => handleMakeAdmin(user)}
                   >
                     <FaUser className="text-2xl" />
                   </button>
