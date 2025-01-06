@@ -7,6 +7,7 @@ import Order from "../pages/Order/Order";
 import SignUp from "../pages/SignUp/SignUp";
 import Dashboard from "../layouts/Dashboard";
 import Cart from "../pages/Dashboard/Cart/cart";
+import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 
 const router = createBrowserRouter([
   {
@@ -43,7 +44,11 @@ const router = createBrowserRouter([
       {
         path:'cart',
         element:<Cart></Cart>
-      }
+      },
+      {
+        path: "users",
+        element: <AllUsers></AllUsers>,
+      },
     ]
   }
 ]);

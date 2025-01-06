@@ -1,17 +1,12 @@
 import React, { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import {
-  FaEye,
-  FaEyeSlash,
-  FaFacebook,
-  FaGithub,
-  FaGoogle,
-} from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { AuthContext } from "../../provider/AuthProvider";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 const SignUp = () => {
   const { createNewUser, setUser, updateUserProfile } = useContext(AuthContext);
@@ -197,16 +192,8 @@ const SignUp = () => {
             <p className="px-4 text-sm text-gray-500">Or sign up with</p>
             <div className="h-px w-1/4 bg-gray-300"></div>
           </div>
-          <div className="flex justify-center mt-4 space-x-4">
-            <button className="p-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300 transform transition duration-300 hover:scale-110">
-              <FaFacebook size={24} />
-            </button>
-            <button className="p-3 bg-red-500 text-white rounded-full hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300 transform transition duration-300 hover:scale-110">
-              <FaGoogle size={24} />
-            </button>
-            <button className="p-3 bg-gray-800 text-white rounded-full hover:bg-gray-900 focus:outline-none focus:ring focus:ring-gray-500 transform transition duration-300 hover:scale-110">
-              <FaGithub size={24} />
-            </button>
+          <div>
+            <SocialLogin></SocialLogin>
           </div>
         </div>
 

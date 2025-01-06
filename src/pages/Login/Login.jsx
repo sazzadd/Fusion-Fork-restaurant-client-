@@ -1,12 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import {
-  FaEye,
-  FaEyeSlash,
-  FaFacebook,
-  FaGithub,
-  FaGoogle,
-} from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaHome } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   LoadCanvasTemplate,
@@ -14,19 +8,19 @@ import {
   validateCaptcha,
 } from "react-simple-captcha";
 import { toast } from "react-toastify";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 import { AuthContext } from "../../provider/AuthProvider";
+
 const LoginPage = () => {
   const captchaRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
   const [captchaValidated, setCaptchaValidated] = useState(false);
   const [error, setError] = useState({});
-  const { userLogin, user, setUser } = useContext(AuthContext);
+  const { userLogin, user, setUser, googleSignIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const pathaname = location.state?.form?.pathname || "/";
-  console.log("state in the location", location.state);
 
-  // State for toggling password visibility
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
@@ -42,7 +36,6 @@ const LoginPage = () => {
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
 
     userLogin(email, password)
       .then((result) => {
@@ -50,14 +43,7 @@ const LoginPage = () => {
         if (user) {
           toast.success("Login successful!");
           setTimeout(() => {
-            // if(form){
-            // navigate( form) 
-            // }
-            // else{
-            //   navigate("/")
-            // }
-            navigate(pathaname)
-           ;
+            navigate(pathaname);
           }, 2000);
         }
       })
@@ -69,7 +55,6 @@ const LoginPage = () => {
 
   const handleValidateCaptcha = () => {
     const user_captcha_value = captchaRef.current.value;
-    console.log("User Captcha:", user_captcha_value);
     if (validateCaptcha(user_captcha_value)) {
       setDisabled(false);
       setCaptchaValidated(true);
@@ -80,6 +65,12 @@ const LoginPage = () => {
     }
   };
 
+  const handleGoogleSignIn = () => {
+    googleSignIn().then((result) => {
+      console.log(result.user);
+    });
+  };
+
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-cover bg-center"
@@ -88,8 +79,17 @@ const LoginPage = () => {
       }}
     >
       <Helmet>
-        <title>Fusion Fork |Login</title>
+        <title>Fusion Fork | Login</title>
       </Helmet>
+
+      {/* Back to Home Button */}
+      <Link
+        to="/"
+        className="absolute top-4 left-4 bg-gray-800 text-white p-3 rounded-full flex items-center justify-center hover:bg-gray-600 transition duration-300 shadow-md transform hover:scale-110"
+      >
+        <FaHome size={24} />
+      </Link>
+
       <div className="flex bg-white shadow-lg rounded-lg overflow-hidden max-w-4xl w-full">
         {/* Left Side */}
         <div className="hidden md:block w-1/2 h-auto">
@@ -149,8 +149,7 @@ const LoginPage = () => {
               <button
                 type="button"
                 onClick={handleValidateCaptcha}
-                className="btn mt-5 btn-outline btn-xs px-3 py-1 text-xs font-medium rounded-full border-2 border-green-500 text-green-500 
-                  hover:bg-green-500 hover:text-white shadow-md hover:shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-110"
+                className="btn mt-5 btn-outline btn-xs px-3 py-1 text-xs font-medium rounded-full border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white shadow-md hover:shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-110"
               >
                 Validate
               </button>
@@ -160,7 +159,7 @@ const LoginPage = () => {
               className={`w-full py-2 rounded-lg text-white transition-opacity duration-300 ${
                 disabled
                   ? "bg-gray-300 cursor-not-allowed opacity-70"
-                  : "bg-gradient-to-r from-orange-400 to-yellow-500 hover:opacity-90 cursor-pointer"
+                  : "bg-blue-600 hover:bg-blue-500 cursor-pointer"
               }`}
               type="submit"
               value="Login"
@@ -170,25 +169,17 @@ const LoginPage = () => {
             <p>
               New here?{" "}
               <Link className="text-blue-500 hover:underline" to="/signup">
-                {" "}
-                Create a New Account{" "}
+                Create a New Account
               </Link>
             </p>
           </div>
+          {/* social login */}
+
           <div className="mt-6 flex justify-center items-center">
             <p className="text-gray-600 mr-4">Or sign in with</p>
-            <div className="flex space-x-4">
-              <button className="flex justify-center items-center text-blue-600 bg-white rounded-full border border-blue-500 p-3 hover:scale-110 transition-transform duration-200 focus:outline-none">
-                <FaFacebook size={24} />
-              </button>
-              <button className="flex justify-center items-center text-red-600 bg-white rounded-full border border-red-500 p-3 hover:scale-110 transition-transform duration-200 focus:outline-none">
-                <FaGoogle size={24} />
-              </button>
-              <button className="flex justify-center items-center text-gray-800 bg-white rounded-full border border-gray-700 p-3 hover:scale-110 transition-transform duration-200 focus:outline-none">
-                <FaGithub size={24} />
-              </button>
-            </div>
+            <SocialLogin></SocialLogin>
           </div>
+         
         </div>
       </div>
     </div>
