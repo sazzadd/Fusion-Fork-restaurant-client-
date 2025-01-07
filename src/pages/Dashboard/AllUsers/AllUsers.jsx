@@ -6,12 +6,13 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
+
   const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users", {
-        headers: {
-          authororization: `bearer${localStorage.getItem("access-token")}`,
+       headers: {
+          authorization: `Bearer ${localStorage.getItem("access-token")}`,
         },
       });
       return res.data;
@@ -40,17 +41,15 @@ const AllUsers = () => {
   const handleMakeAdmin = (user) => {
     console.log(user);
     axiosSecure
-      .patch(`/users/admin/${user._id}`)
-      .then((res) => {
+      .patch(`/users/admin/${user}`)
+      .then(res => {
         console.log(res.data);
-        if (res.data.modifiedCount > 0) {
-          refetch();
+        if(res.data.modifiedCount > 0) {
+          refetch()
           Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: `${user.name} is now an Admin!`,
-            showConfirmButton: false,
-            timer: 1500,
+            title: "Good job!",
+            text: `${user.name} in an Admin Now`,
+            icon: "success"
           });
         }
       })
@@ -63,6 +62,20 @@ const AllUsers = () => {
         });
       });
   };
+  // const handleMakeAdmin = user => {
+  //   axiosSecure.patch(`/users/admin/${user}`)
+  //   .then(res => {
+  //     console.log(res.data);
+  //     if(res.data.modifiedCount > 0) {
+  //       refetch()
+  //       Swal.fire({
+  //         title: "Good job!",
+  //         text: `${user.name} in an Admin Now`,
+  //         icon: "success"
+  //       });
+  //     }
+  //   })
+  // }
   return (
     <div className="p-5 bg-gray-100 min-h-screen">
       <div className="max-w-7xl mx-auto bg-white shadow-lg rounded-lg p-5">
@@ -115,7 +128,7 @@ const AllUsers = () => {
                       ) : (
                         <button
                           className="text-white bg-orange-500 px-3 py-1 rounded hover:bg-orange-600 transition"
-                          onClick={() => handleMakeAdmin(user)}
+                          onClick={() => handleMakeAdmin(user._id)}
                         >
                           <FaUser className="text-xl" />
                         </button>
