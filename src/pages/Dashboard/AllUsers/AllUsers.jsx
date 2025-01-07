@@ -34,10 +34,11 @@ const AllUsers = () => {
     });
   };
   const handleMakeAdmin = (user) => {
+    console.log(user);
     axiosSecure.patch(`/users/admin/${user._id}`).then((res) => {
       console.log(res.data);
       if (res.data.modifiedCount > 0) {
-        refetch();
+        refetch()
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -72,24 +73,24 @@ const AllUsers = () => {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>
-                  <button
-                    className="text-white bg-orange-300 p-1 rounded hover:text-green-300 transition-transform transform hover:scale-110"
-                    onClick={() => handleMakeAdmin(user)}
-                  >
-                    <FaUser className="text-2xl" />
-                  </button>
-                </td>
-                <td>
                   {user.role === "admin" ? (
-                    "admin"
+                    "Admin"
                   ) : (
                     <button
-                      className="text-red-500 hover:text-red-700 transition-transform transform hover:scale-110"
-                      onClick={() => handleDeleteUser(user)}
+                      className="text-white bg-orange-300 p-1 rounded hover:text-green-300 transition-transform transform hover:scale-110"
+                      onClick={() => handleMakeAdmin(user)}
                     >
-                      <FaTrashAlt className="text-2xl" />
+                      <FaUser className="text-2xl" />
                     </button>
                   )}
+                </td>
+                <td>
+                  <button
+                    className="text-red-500 hover:text-red-700 transition-transform transform hover:scale-110"
+                    onClick={() => handleDeleteUser(user)}
+                  >
+                    <FaTrashAlt className="text-2xl" />
+                  </button>
                 </td>
               </tr>
             ))}
