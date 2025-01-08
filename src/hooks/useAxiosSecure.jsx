@@ -1,10 +1,13 @@
 import axios from "axios";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../provider/AuthProvider";
 
 const axiosSecure = axios.create({
   baseURL: "http://localhost:5000",
 });
 const useAxiosSecure = () => {
+  const { user, logOut } = useContext(AuthContext);
   const navigate = useNavigate();
   axiosSecure.interceptors.request.use(
     function (config) {
@@ -23,10 +26,11 @@ const useAxiosSecure = () => {
       // Do something with response data
       return response;
     },
-    (error) => {
+    async (error) => {
       const status = error.response.status;
       console.log("status rrror in the interceptor", status);
       if (status === 401 || status === 403) {
+        await logOut();
         navigate("/login");
       }
       return Promise.reject(error);
