@@ -1,19 +1,20 @@
 import React from "react";
 import {
-  FaHome,
-  FaUtensils,
-  FaTasks,
-  FaClipboardList,
-  FaUsers,
-  FaShoppingCart,
-  FaCommentDots,
   FaCalendarAlt,
+  FaClipboardList,
+  FaCommentDots,
   FaConciergeBell,
+  FaHome,
+  FaShoppingCart,
+  FaTasks,
+  FaUsers,
+  FaUtensils,
 } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
+import useAdmin from "../hooks/useAdmin";
 
 const Dashboard = () => {
-  const isAdmin = true;
+  const [isAdmin] = useAdmin();
   return (
     <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
