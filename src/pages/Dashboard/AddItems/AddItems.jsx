@@ -1,6 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import SecTitile from "../../../components/SecTitile";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AddItems = () => {
   //   const { register, handleSubmit } = useForm();
@@ -9,13 +11,42 @@ const AddItems = () => {
   //     console.log("hellow");
   //   };
 
+  const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+  const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
+  
+
+  const onSubmit = async (data) => {
+    console.log(data)
+    const imageFile = {image:data.image[0]}
+    const res = await axiosPublic.post(image_hosting_api,imageFile,{
+        headers: {
+           " content-type":'multipart/form-data'
+        }
+
+        
+    })
+    if(res.data,success){
+      const menuItem = {
+        name:data.name,
+        category:data.category,
+        price:parseFloat(data.price),
+        image:res.data.data.display_url
+
+      }
+      // 
+      const menuRes = await axiosSecure.post('/menu', menuItem);
+      console.log(menuRes.data)
+    }
+    console.log('with img url',res.data)
+  };
   return (
     <div>
       <SecTitile heading="ADD AN ITEM" subHeading="whats new"></SecTitile>
@@ -151,7 +182,7 @@ const AddItems = () => {
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-500 focus:border-indigo-500"
                 placeholder="Recipe name"
               />
-              {errors.name && <span>This field is required</span>} 
+              {errors.name && <span>This field is required</span>}
             </div>
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div>
