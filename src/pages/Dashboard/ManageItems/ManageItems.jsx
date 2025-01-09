@@ -1,70 +1,78 @@
-import React from 'react';
-import SecTitile from '../../../components/SecTitile';
+import React from "react";
+import SecTitile from "../../../components/SecTitile";
+import useMenu from "../../../hooks/useMenu";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 
 const ManageItems = () => {
-    return (
-        <div>
-            <SecTitile subHeading="Huury Up" heading="MANAGE ALL ITEMS"></SecTitile>
-            {/* table */}
-            <div className="overflow-x-auto">
-  <table className="table">
-    {/* head */}
-    <thead>
-      <tr>
-        <th>
-          index
-        </th>
-        <th>Ieem Image</th>
-        <th>Job</th>
-        <th>Favorite Color</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {/* row 1 */}
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" className="checkbox" />
-          </label>
-        </th>
-        <td>
-          <div className="flex items-center gap-3">
-            <div className="avatar">
-              <div className="mask mask-squircle h-12 w-12">
-                <img
-                  src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                  alt="Avatar Tailwind CSS Component" />
-              </div>
-            </div>
-            <div>
-              <div className="font-bold">Hart Hagerty</div>
-              <div className="text-sm opacity-50">United States</div>
-            </div>
-          </div>
-        </td>
-        <td>
-          Zemlak, Daniel and Leannon
-          <br />
-          <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
-        </td>
-        <td>Purple</td>
-        <th>
-          <button className="btn btn-ghost btn-xs">details</button>
-        </th>
-      </tr>
-      {/* row 2 */}
-  
-      
-      {/* row 4 */}
-      
-    </tbody>
-    {/* foot */}
-    
-  </table>
-</div>
-        </div>
-    );
+  const [menu] = useMenu();
+  const  handleDelete = (item )=> {
+
+  }
+  return (
+   
+    <div>
+      <SecTitile subHeading="Huury Up" heading="MANAGE ALL ITEMS"></SecTitile>
+      {/* table */}
+      <div className="overflow-x-auto">
+        <table className="table">
+          {/* head */}
+          <thead>
+            <tr>
+              <th>
+                <label>index</label>
+              </th>
+              <th>Item Image</th>
+              <th>Item Name</th>
+              <th>Price</th>
+              <th>Action</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* row 1 */}
+            {menu.map((item, index) => (
+              <tr>
+                <th>{index + 1}</th>
+                <td>
+                  <div className="flex items-center gap-3">
+                    <div className="avatar">
+                      <div className="mask rounded h-12 w-12">
+                        <img
+                          src={item.image}
+                          alt="Avatar Tailwind CSS Component"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>{item.name}</td>
+                <td>{item.price}</td>
+                <th>
+                <button
+                    className="text-orange-400 hover:text-orange-600 transition-transform transform hover:scale-110"
+                    // onClick={() => handleDelete(item)}
+                  >
+                    <FaEdit className="text-2xl" />
+                    {/* <FaTrashAlt className="text-2xl" /> */}
+                  </button>
+                </th>
+
+                <td>
+                  <button
+                    className="text-red-500 hover:text-red-700 transition-transform transform hover:scale-110"
+                    onClick={() => handleDelete(item)}
+                  >
+                    <FaTrashAlt className="text-2xl" />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+          {/* foot */}
+        </table>
+      </div>
+    </div>
+  );
 };
 
 export default ManageItems;
