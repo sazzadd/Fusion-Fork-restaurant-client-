@@ -6,9 +6,35 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useMenu from "../../../hooks/useMenu";
 
 const ManageItems = () => {
-  const [menu] = useMenu();
+  const [menu, , refetch] = useMenu();
   const axiosSecure = useAxiosSecure();
+  // const handleDelete = (item) => {
+  //   Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, delete it!",
+  //   }).then(async (result) => {
+  //     if (result.isConfirmed) {
+  //       //   Swal.fire({
+  //       //     title: "Deleted!",
+  //       //     text: "Your file has been deleted.",
+  //       //     icon: "success"
+  //       //   });
+  //       const res = await axiosSecure.delete(`/menu/${item._id}`);
+  //       console.log(res.data)
+  //       if (res.data.deletedCount > 0) {
+  //         refetch();
+  //         Swal.fire("Deleted!", "The item has been removed.", "success");
+  //       }
+  //     }
+  //   });
+  // };
   const handleDelete = (item) => {
+   
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -19,19 +45,19 @@ const ManageItems = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        //   Swal.fire({
-        //     title: "Deleted!",
-        //     text: "Your file has been deleted.",
-        //     icon: "success"
-        //   });
+        console.log("Deleting item with ID:", item._id);
         const res = await axiosSecure.delete(`/menu/${item._id}`);
+        console.log(res.data);
         if (res.data.deletedCount > 0) {
-          refetch();
+          refetch(); // Ensure this works
           Swal.fire("Deleted!", "The item has been removed.", "success");
+        } else {
+          Swal.fire("Error!", "Failed to delete the item.", "error");
         }
       }
     });
   };
+
   return (
     <div>
       <SecTitile subHeading="Huury Up" heading="MANAGE ALL ITEMS"></SecTitile>
