@@ -1,31 +1,38 @@
 import React from "react";
-import SecTitile from "../../../components/SecTitile";
-import useMenu from "../../../hooks/useMenu";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import Swal from "sweetalert2";
+import SecTitile from "../../../components/SecTitile";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useMenu from "../../../hooks/useMenu";
 
 const ManageItems = () => {
   const [menu] = useMenu();
-  const  handleDelete = (item )=> {
+  const axiosSecure = useAxiosSecure();
+  const handleDelete = (item) => {
     Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-      }).then((result) => {
-        if (result.isConfirmed) {
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
         //   Swal.fire({
         //     title: "Deleted!",
         //     text: "Your file has been deleted.",
         //     icon: "success"
         //   });
+        const res = await axiosSecure.delete(`/menu/${item._id}`);
+        if (res.data.deletedCount > 0) {
+          refetch();
+          Swal.fire("Deleted!", "The item has been removed.", "success");
         }
-      });
-  }
+      }
+    });
+  };
   return (
-   
     <div>
       <SecTitile subHeading="Huury Up" heading="MANAGE ALL ITEMS"></SecTitile>
       {/* table */}
@@ -64,7 +71,7 @@ const ManageItems = () => {
                 <td>{item.name}</td>
                 <td>{item.price}</td>
                 <th>
-                <button
+                  <button
                     className="text-orange-400 hover:text-orange-600 transition-transform transform hover:scale-110"
                     // onClick={() => handleDelete(item)}
                   >
