@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import SecTitile from "../../../components/SecTitile";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const AddItems = () => {
   //   const { register, handleSubmit } = useForm();
@@ -16,7 +17,7 @@ const AddItems = () => {
   const {
     register,
     handleSubmit,
-    watch,
+    reset,
     formState: { errors },
   } = useForm();
   const axiosPublic = useAxiosPublic();
@@ -33,7 +34,7 @@ const AddItems = () => {
 
         
     })
-    if(res.data,success){
+    if(res.data.success){
       const menuItem = {
         name:data.name,
         category:data.category,
@@ -44,6 +45,16 @@ const AddItems = () => {
       // 
       const menuRes = await axiosSecure.post('/menu', menuItem);
       console.log(menuRes.data)
+      if(menuRes.data.insertedId){
+        reset()
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title:  `${data.name} is added to the menu`,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
     }
     console.log('with img url',res.data)
   };
