@@ -49,11 +49,23 @@ const Cart = () => {
           Total Price:{" "}
           <span className="text-orange-600">${totalPrice.toFixed(2)}</span>
         </div>
-        <Link to="/dashboard/payment">
-          <button className="btn bg-[#D1A054] hover:bg-orange-500 text-white py-3 px-6 rounded-full shadow-md transition-transform transform hover:scale-105">
+        {cart.length ? (
+          <Link to="/dashboard/payment">
+            <button
+              disabled={!cart.length}
+              className="btn bg-[#D1A054] hover:bg-orange-500 text-white py-3 px-6 rounded-full shadow-md transition-transform transform hover:scale-105"
+            >
+              Pay Now
+            </button>
+          </Link>
+        ) : (
+          <button
+            disabled
+            className="btn bg-[#D1A054] hover:bg-orange-500 text-white py-3 px-6 rounded-full shadow-md transition-transform transform hover:scale-105"
+          >
             Pay Now
           </button>
-        </Link>
+        )}
       </div>
 
       {/* Cart Items */}
