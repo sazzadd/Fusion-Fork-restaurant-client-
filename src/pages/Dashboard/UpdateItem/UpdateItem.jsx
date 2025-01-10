@@ -7,8 +7,9 @@ import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const UpdateItem = () => {
-  const { name, category, recipe, price ,_id} = useLoaderData();
-  console.log(item);
+  const { name, category, recipe, price, _id, image } = useLoaderData();
+  // console.log(item);
+  console.log(name);
   const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
   const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
   const {
@@ -38,8 +39,8 @@ const UpdateItem = () => {
       //
       const menuRes = await axiosSecure.patch(`/menu/${_id}`, menuItem);
       console.log(menuRes.data);
-      if (menuRes.data.insertedId) {
-        reset();
+      if (menuRes.data.modifiedCount > 0) {
+        // reset();
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -60,7 +61,7 @@ const UpdateItem = () => {
             htmlFor="recipeName"
             className="block text-sm font-medium text-gray-700"
           >
-            Recipe name<span className="text-red-500">*</span>
+            Recipe name<span className="text-red-500">* </span>
           </label>
           <input
             {...register("name", { required: true })}
@@ -140,10 +141,11 @@ const UpdateItem = () => {
             Upload File
           </label>
           <input
-            {...register("image", { required: true })}
+            {...register("image")}
             id="fileUpload"
             type="file"
             name="image"
+            
             className="mt-1 block w-full text-gray-700 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
