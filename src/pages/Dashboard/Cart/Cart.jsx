@@ -1,9 +1,10 @@
 import React from "react";
 import { FaTrashAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useCart from "../../../hooks/useCart";
-import Swal from "sweetalert2";
-import SecTitile from './../../../components/SecTitile';
+import SecTitile from "./../../../components/SecTitile";
 
 const Cart = () => {
   const [cart, refetch] = useCart();
@@ -34,23 +35,27 @@ const Cart = () => {
   return (
     <div className="bg-gray-50 min-h-screen p-8">
       {/* Header Section */}
-      <SecTitile heading= "MANAGE ALL BOOKINGS" subHeading ="At a Glance!"></SecTitile>
+      <SecTitile
+        heading="MANAGE ALL BOOKINGS"
+        subHeading="At a Glance!"
+      ></SecTitile>
 
       {/* Cart Summary */}
       <div className="flex flex-wrap justify-between items-center mb-8 gap-4">
         <div className="text-2xl font-semibold text-gray-700">
-          Total Orders:{" "}
-          <span className="text-[#D1A054]">{cart.length}</span>
+          Total Orders: <span className="text-[#D1A054]">{cart.length}</span>
         </div>
         <div className="text-2xl font-semibold text-gray-700">
           Total Price:{" "}
           <span className="text-orange-600">${totalPrice.toFixed(2)}</span>
         </div>
-        <button className="btn bg-[#D1A054] hover:bg-orange-500 text-white py-3 px-6 rounded-full shadow-md transition-transform transform hover:scale-105">
-          Pay Now
-        </button>
+        <Link to="/dashboard/payment">
+          <button className="btn bg-[#D1A054] hover:bg-orange-500 text-white py-3 px-6 rounded-full shadow-md transition-transform transform hover:scale-105">
+            Pay Now
+          </button>
+        </Link>
       </div>
-      
+
       {/* Cart Items */}
       {cart.length > 0 ? (
         <div className="overflow-x-auto shadow-md rounded-lg">
