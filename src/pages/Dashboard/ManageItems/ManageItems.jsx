@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import SecTitile from "../../../components/SecTitile";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useMenu from "../../../hooks/useMenu";
+import { Link } from "react-router-dom";
 
 const ManageItems = () => {
   const [menu, , refetch] = useMenu();
@@ -34,7 +35,6 @@ const ManageItems = () => {
   //   });
   // };
   const handleDelete = (item) => {
-   
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -97,13 +97,16 @@ const ManageItems = () => {
                 <td>{item.name}</td>
                 <td>{item.price}</td>
                 <th>
-                  <button
-                    className="text-orange-400 hover:text-orange-600 transition-transform transform hover:scale-110"
-                    // onClick={() => handleDelete(item)}
-                  >
-                    <FaEdit className="text-2xl" />
-                    {/* <FaTrashAlt className="text-2xl" /> */}
-                  </button>
+                  <Link to={`/dashboard/updateItem/${item._id}`}>
+                    <button
+                      className="text-orange-400 hover:text-orange-600 transition-transform transform hover:scale-110"
+                      // onClick={() => handleDelete(item)}
+                    >
+                      <FaEdit className="text-2xl" />
+                      {/* <FaTrashAlt className="text-2xl" /> */}
+                    </button>
+                  </Link>
+                  
                 </th>
 
                 <td>
