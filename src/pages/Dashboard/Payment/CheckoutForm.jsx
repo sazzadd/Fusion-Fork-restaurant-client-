@@ -1,9 +1,11 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useCart from "../../../hooks/useCart";
+import { AuthContext } from "../../../provider/AuthProvider";
 
 const CheckoutForm = () => {
+  const { user } = useContext(AuthContext);
   const stripe = useStripe();
   const elements = useElements("");
   const [error, setError] = useState();
@@ -11,13 +13,13 @@ const CheckoutForm = () => {
   const axiosSecure = useAxiosSecure();
   const [cart] = useCart();
   const totalPrice = cart.reduce((total, item) => total + item.price, 0);
-  useEffect( () => {
-   const res= axiosSecure.post("/create-payment-intent", { price: totalPrice })
-   .then(res => {
-    console.log(res.data.clientSecret)
-    setClientSecret(res.data.clientSecret)
-
-   })
+  useEffect(() => {
+    const res = axiosSecure
+      .post("/create-payment-intent", { price: totalPrice })
+      .then((res) => {
+        console.log(res.data.clientSecret);
+        setClientSecret(res.data.clientSecret);
+      });
   }, [axiosSecure, totalPrice]);
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -47,6 +49,21 @@ const CheckoutForm = () => {
       alert("Payment successful!");
       setError("");
     }
+    const { paymentIntent, error: confirmError } =
+      await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card,
+          billing_details: {
+            email: user?.email || "anonymous",
+            name: user?.displayName || "anonymous",
+          },
+        },
+      });
+    if (confirmError) {
+      console.log("confirm error");
+    } else {
+      console.log("payment intent", paymentIntent);
+    }
   };
 
   return (
@@ -69,7 +86,7 @@ const CheckoutForm = () => {
       />
       <button
         type="submit"
-        disabled={!stripe ||!clientSecret}
+        disabled={!stripe || !clientSecret}
         style={{
           marginTop: "20px",
           padding: "10px 20px",

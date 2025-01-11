@@ -99,7 +99,8 @@ const Navbar = () => {
                 tabIndex="0"
                 className="menu menu-sm z-[1000] absolute dropdown-content bg-white rounded-lg mt-3 w-48 p-2 shadow-lg transition-all duration-300"
               >
-                <li className="font-semibold">{user.displayName}</li>
+                <li className="font-semibold text-gray-900">{user.displayName}</li>
+                <li className="font-semibold text-gray-500">{user.email}</li>
                 {/* <>{navLinks}</> */}
                 <li className="font-semibold">
                   <button
