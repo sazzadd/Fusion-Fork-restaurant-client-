@@ -76,8 +76,8 @@ const CheckoutForm = () => {
           menuItemId: cart.map((item) => item.menuId),
           status: "pending",
         };
-        const res =await axiosSecure.post("/payment", payment);
-        console.log("payment save",res);
+        const res = await axiosSecure.post("/payment", payment);
+        console.log("payment save", res.data);
       }
     }
   };
