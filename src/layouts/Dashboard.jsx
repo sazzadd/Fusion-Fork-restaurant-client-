@@ -24,7 +24,7 @@ const Dashboard = () => {
             <>
               <li className="hover:bg-orange-500 rounded-lg transition-all duration-300">
                 <NavLink
-                  to="/dashboard/AdminHome"
+                  to="/dashboard/adminHome"
                   className="flex items-center gap-3"
                 >
                   <FaHome />
