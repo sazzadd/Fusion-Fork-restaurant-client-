@@ -71,10 +71,13 @@ const CheckoutForm = () => {
           email: user.email,
           price: totalPrice,
           date: new Date(),
+          transactionId: paymentIntent.id,
           cartId: cart.map((item) => item._id),
-          menuItemId:cart.map(item =>item.menuId),
-          status:'pending'
+          menuItemId: cart.map((item) => item.menuId),
+          status: "pending",
         };
+        const res =await axiosSecure.post("/payment", payment);
+        console.log("payment save",res);
       }
     }
   };
