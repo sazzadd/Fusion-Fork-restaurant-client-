@@ -6,16 +6,52 @@ import { AuthContext } from "../../../provider/AuthProvider";
 const PaymentHistory = () => {
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
-  const { data: payment } = useQuery({
-    queryKey: ["payment", user.email],
+  const { data: payments } = useQuery({
+    queryKey: ["payments", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`payment/${user.email}`);
+      const res = await axiosSecure.get(`payments/${user?.email}`);
       return res.data;
     },
   });
   return (
     <div>
-      <h1>Total Payment :{payment.length}</h1>
+      <h1>Total Payment :{payments?.length}</h1>
+      <div className="overflow-x-auto">
+  <table className="table">
+    {/* head */}
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Job</th>
+        <th>Favorite Color</th>
+      </tr>
+    </thead>
+    <tbody>
+      {/* row 1 */}
+      <tr>
+        <th>1</th>
+        <td>Cy Ganderton</td>
+        <td>Quality Control Specialist</td>
+        <td>Blue</td>
+      </tr>
+      {/* row 2 */}
+      <tr className="hover">
+        <th>2</th>
+        <td>Hart Hagerty</td>
+        <td>Desktop Support Technician</td>
+        <td>Purple</td>
+      </tr>
+      {/* row 3 */}
+      <tr>
+        <th>3</th>
+        <td>Brice Swyre</td>
+        <td>Tax Accountant</td>
+        <td>Red</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
     </div>
   );
 };
