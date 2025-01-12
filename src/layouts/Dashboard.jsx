@@ -81,7 +81,7 @@ const Dashboard = () => {
               </li>
               <li className="hover:bg-orange-500 rounded-lg transition-all duration-300">
                 <NavLink
-                  to="/dashboard/reservation"
+                  to="/dashboard/paymentHistory"
                   className="flex items-center gap-3"
                 >
                   <FaCalendarAlt />
